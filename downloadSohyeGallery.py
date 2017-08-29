@@ -1,18 +1,33 @@
 import random
-import urllib.request
-from bs4 import BeautifulSoup
+import urllib.request as url
+from bs4 import BeautifulSoup as BS
+import base64
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 def download_web_images(url):
     name = random.randrange(1,1001)
     full_name = str(name) + ".jpg"
-    urllib.request.urlretrieve(url, full_name)
+    url.urlretrieve(url, "./img/" + full_name)
+
 
 if __name__ == "__main__":
-    req = urllib.request.Request("http://gall.dcinside.com/board/lists/?id=kimsohye");
-    data = urllib.request.urlopen(req).read()
-    bs = BeautifulSoup(data, 'html.parser')
 
+    driver = webdriver.Chrome("C:\selenium\chromedriver.exe")
+    driver.get("http://gall.dcinside.com/board/lists/?id=kimsohye")
+    bs = BS(driver.page_source, 'html5lib')
 
-    download_web_images('http://www.hmgjournal.com/images_n/contents/170616_sohot01.jpg')
+    bstring  = str(bs)
+
+    f = open("./crawlWebpage.html", "wb")
+    f.write(bstring.encode())
+    f.close()
+
+    driver.quit()
+
 
 
