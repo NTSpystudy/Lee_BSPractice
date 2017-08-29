@@ -17,11 +17,13 @@ def download_web_images(url):
 
 if __name__ == "__main__":
 
-    driver = webdriver.Chrome("C:\selenium\chromedriver.exe")
+    driver = webdriver.Chrome("chromedriver.exe")
     driver.get("http://gall.dcinside.com/board/lists/?id=kimsohye")
     bs = BS(driver.page_source, 'html5lib')
 
     bstring  = str(bs)
+
+    print(bstring)
 
     f = open("./crawlWebpage.html", "wb")
     f.write(bstring.encode())
